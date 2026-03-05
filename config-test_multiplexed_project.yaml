@@ -1,0 +1,19 @@
+project:
+  proj_dir: /pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project
+  fastq_dir: data/fastqs/rna
+  full_tag: test_multiplexed_project
+  short_tag: test
+  your_name: Will Macnair
+  affiliation: F. Hoffmann-La Roche Ltd.
+  sample_metadata: data/metadata/multiplexed_test_project_metadata.csv
+  ref_txome: mouse_2024
+  date_stamp: "2026-02-19"
+  arv_instance: arkau
+multiplexing:
+  demux_type: hto
+  fastq_dir: data/fastqs/hto
+  feature_ref: data/metadata/multiplexed_test_project_feature_ref.csv
+qc:
+  qc_max_mito: 0.1
+  qc_min_splice: 0.10
+  qc_max_splice: 0.99

@@ -1,0 +1,8 @@
+name: "test_multiplexed_project"
+output_dir: ../public
+navbar:
+  title: "test_multiplexed_project"
+output:
+  rmdformats::downcute:
+    highlight: textmate
+    code_folding: hide

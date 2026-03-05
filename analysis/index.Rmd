@@ -1,0 +1,36 @@
+---
+title: "test_multiplexed_project"
+author:
+- name: Will Macnair
+  affiliation: 
+  - F. Hoffmann-La Roche Ltd.
+date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+output:
+  rmdformats::downcute:
+    highlight: textmate
+    code_folding: hide
+    toc_depth: 3
+    css: custom.css
+---
+
+
+This page serves as a starting point for exploring the results of `scprocess`. The links below organize all generated reports, with each one detailing a specific step of the analysis (e.g., mapping, ambient RNA removal, QC).
+
+Use this page to navigate through the full set of visualizations and outputs for your project.
+
+## Core steps
+
+- Mapping ([link](test_mapping.html))
+- Demultiplexing ([link](test_demultiplexing.html))
+- Ambient RNA removal ([link](test_ambient.html))
+- QC ([link](test_qc.html))
+- Highly variable genes ([link](test_hvgs.html))
+- Integration ([link](test_integration.html))
+- Marker genes ([link](test_marker_genes_0.2.html))
+
+
+
+
+
+
+

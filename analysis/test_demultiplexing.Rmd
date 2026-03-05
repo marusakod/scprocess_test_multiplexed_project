@@ -1,0 +1,216 @@
+---
+title: "Multiplexing diagnostics"
+author:
+- name: Will Macnair
+  affiliation:
+  - F. Hoffmann-La Roche Ltd.
+date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+output:
+  rmdformats::downcute:
+    highlight: textmate
+    code_folding: hide
+    toc_depth: 3
+    css: custom.css
+---
+
+```{r setup_knitr, include=FALSE}
+library('BiocStyle')
+knitr::opts_chunk$set(
+  autodep=TRUE, cache=TRUE, cache.lazy=FALSE, dev='png', warning = FALSE, message = FALSE, 
+  fig.path = "figure/test_multiplexing.Rmd/"
+  )
+knitr::opts_knit$set(root.dir = '..', base.dir = '../public/', base.url = '')
+```
+
+```{r setup_helpers, cache=FALSE, include = FALSE}
+source('code/utils.R')
+source('code/mapping.R')
+source('code/multiplexing.R')
+```
+
+```{r get_samples, include = FALSE}
+# get all sample ids
+s_lvls    =  "run1,run2" %>%
+  str_split(pattern = ',') %>% unlist()
+```
+
+```{r setup_input, include = FALSE}
+# project metadata
+proj_meta_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/data/metadata/multiplexed_test_project_metadata.csv"
+
+
+# files with barcode ranks and ambient parameters
+af_dir      = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_mapping"
+demux_dir   = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_demultiplexing"
+run_var     = "pool_id"
+
+hto_smpl_dirs = sprintf(paste0(af_dir,'/', 'af_%s', '/hto' ), s_lvls)
+
+# find hto knees
+hto_knee_fs = sapply(
+  hto_smpl_dirs,
+  function(d) list.files(d, pattern = 'knee_plot_data_(.+)_.*.csv.gz.*', recursive = FALSE, full.names = TRUE)
+) %>%
+setNames(s_lvls)
+
+assert_that( length(hto_knee_fs) > 0)
+assert_that( all(file.exists(hto_knee_fs)))
+
+# hto sce
+hto_sce_fs = sapply(
+  s_lvls, 
+  function(s) list.files(demux_dir, pattern = sprintf('sce_cells_htos_%s.*', s), recursive = FALSE, full.names = TRUE)
+) %>%
+setNames(s_lvls)
+
+assert_that( length(hto_sce_fs) > 0) 
+assert_that( all(file.exists(hto_sce_fs)))
+```
+
+```{r load_hto_sce, include = FALSE}
+# filter out empty files
+nonempty_idx  = sapply(hto_sce_fs, FUN = function(f) file.size(f) > 0)
+s_lvls        = s_lvls[ nonempty_idx ]
+hto_knee_fs   = hto_knee_fs[ nonempty_idx ]
+hto_sce_fs    = hto_sce_fs[ nonempty_idx ]
+
+# then load
+hto_sce_ls    = lapply(hto_sce_fs, FUN = readRDS)
+```
+
+```{r load_meta, include=FALSE}
+# replace all underscores with dashes
+proj_meta = fread(proj_meta_f) %>%
+  .[, hto_id := gsub('_', '-', hto_id)]
+```
+
+```{r get_hto_knee_params, include = FALSE}
+hto_knee_params_df = lapply(hto_knee_fs, FUN = get_knee_params, sample_var = run_var) %>% rbindlist()
+```
+
+```{r get_hto_dt, include = FALSE}
+pool_ids   = unique(proj_meta$pool_id)
+sample_ids = unique(proj_meta$sample_id)
+hto_dt_ls  = lapply(hto_sce_ls, FUN = get_hto_dt)
+```
+
+```{r arrange_samples_for_hto_qc_plots, include = FALSE}
+# get total sample number
+sample_n = nrow(hto_knee_params_df)
+
+# arrange samples into groups of 12 acoording to their slope ratio
+slope_ratio_ordered_samples = hto_knee_params_df %>%
+  .[order(-slope_ratio)] %>%
+  .[, get(run_var) ]
+
+# split long vector into subsets
+n_per_plot  = 12
+num_subsets = ceiling(sample_n/n_per_plot)
+index_vec_for_split = rep(1:num_subsets, each = n_per_plot, length.out = sample_n)
+
+# split sample_id vec into a list of subvectors
+slope_ratio_split_l = split(slope_ratio_ordered_samples, index_vec_for_split)
+```
+
+```{r get_knee_plot_dims, include = FALSE}
+# set defaults
+knee_width = 9
+knee_height = 6
+
+if (sample_n <= 4) {
+  knee_height = ceiling(6 * 1/3)
+  knee_width = ceiling(9 * sample_n/4)
+} else if (sample_n > 4 & sample_n <= 8) {
+  knee_height = ceiling(6 * 2/3)
+}
+```
+
+```{r get_barplot_dims, include=FALSE}
+h_per_r   = 1
+bplot_w   = 6
+bplot_h   = (h_per_r * sample_n) + 1
+```
+
+## Barcode rank plots{.tabset}
+
+For each multiplexed sample/pool, barcodes are ranked in descending order based on their library size (number of unique molecular identifiers).
+Typically, one can observe two plateaus in the barcode-rank curve: the first corresponds to droplets containing cells with high HTO content,
+while the second represents empty droplets containing ambient HTOs.
+The absence of a clear empty plateau indicates poor sample quality due to ambient HTO contamination.
+
+```{r hto_knee_plots_slope_ordered, fig.height = knee_height, fig.width = knee_width, results='asis'}
+for (i in 1:length(slope_ratio_split_l) ) {
+  # get knee dfs for all selected samples
+  samples  = slope_ratio_split_l[[i]]
+  name     = sprintf('sample chunk #%d', i)
+  knee_fs  = hto_knee_fs[samples]
+  cat('### ', name, '\n')
+  print(plot_barcode_ranks_w_params(
+    knee_fs, hto_knee_params_df, sample_var = run_var,
+    bender_priors_df = NULL,  show_lines = FALSE))
+  cat('\n\n')
+}
+```
+
+## Global demultiplexing results
+
+Summary of droplet classification results for each multiplexed sample in the dataset.
+For each sample, the table lists the number of doublets, singlets and negative (ambiguous) droplets.
+
+```{r demux_out_tbl}
+rbindlist(hto_dt_ls) %>%
+  .[, .(pool_id, cell_id, class = HTO_classification.global)] %>%
+  unique %>%
+  .[, .(count = .N), by = .(pool_id, class) ] %>%
+  dcast(pool_id ~ class, value.var = "count") %>%
+  knitr::kable()
+```
+
+
+## HTO demultiplexing summary
+
+For each multiplexed sample/pool the proportion of barcodes assigned to different HTO labels is shown.
+
+```{r hto_barplot, fig.width = bplot_w, fig.height = bplot_h}
+print(hto_barplot(hto_dt_ls))
+```
+
+## Distribution of HTO expression{.tabset}
+
+For each sample, the plot displays the normalized expression levels of all hashtag oligos (HTOs) used to label samples within the same pool.
+Each ridge on the plot corresponds to a single HTO, showing how its expression is distributed across the cells in that sample. 
+
+```{r hto_ridges_plot, results ='asis'}
+for (i in sample_ids) {
+  cat('### ', i, '\n')
+  print(hto_ridges(i, proj_meta = proj_meta, hto_dt_ls = hto_dt_ls))
+  cat('\n\n')
+}
+```
+
+## Pairs of HTO signals{.tabset}
+
+For each pool, pairwise HTO expression levels are shown.
+
+```{r hto_pairwise plot, results = 'asis', fig.height = 7, fig.width = 9}
+for (i in pool_ids) {
+  cat('### ', i, '\n')
+  if (!(i %in% names(hto_dt_ls))) {
+    print("No data for this pool.")
+    next
+  }
+  pool_dt_tmp = hto_dt_ls[[i]]
+  print(hto_pairwise(pool_dt = pool_dt_tmp, var = "norm_count"))
+  cat('\n\n')
+}
+```
+
+## R session info
+
+Details of the R package versions used are given below.
+
+<details>
+```{r session_info, include=TRUE, echo=TRUE, results="markup"}
+devtools::session_info()
+```
+</details>
