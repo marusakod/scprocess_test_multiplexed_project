@@ -1,0 +1,1 @@
+This repository contains `scprocess` reports generated using a test dataset. For more information about the dataset and about running `scprocess` go to https://marusakod.github.io/scprocess/tutorial/. 
