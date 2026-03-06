@@ -1,10 +1,10 @@
 ---
 title: "Ambient RNA removal diagnostics"
 author:
-- name: Will Macnair
+- name: Testy McUser
   affiliation:
-  - F. Hoffmann-La Roche Ltd.
-date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+  - Unemployed
+date: '`r format(as.Date("2026-01-01"), "%B %d, %Y")`'
 output:
   rmdformats::downcute:
     highlight: textmate
@@ -36,12 +36,12 @@ amb_method  = "decontx"
 demux_type  = "hto"
 s_lvls      = "run1,run2" %>%
   str_split(pattern = ',') %>% unlist()
-date_stamp  = "2026-02-19"
+date_stamp  = "2026-01-01"
 
 # files with barcode ranks and knee parameters
 map_dir     = 'output/test_mapping'
 amb_dir     = 'output/test_ambient'
-stats_f     = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_ambient/ambient_run_statistics_test_multiplexed_project_2026-02-19.csv"
+stats_f     = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_ambient/ambient_run_statistics_test_multiplexed_project_2026-01-01.csv"
 
 if(demux_type == 'hto'){
   map_subdir = 'rna/'
@@ -108,7 +108,7 @@ for (ss in s_lvls) {
 }
 ```
 
-## How many reads were removed as ambient?
+## How many reads were removed as ambient?{.tabset}
 Plots show what proportion of reads were removed from all barcodes called as cells.
 
 ```{r plot_reads_removed_as_ambient, eval = plot_removed, fig.height = 4, fig.width = 10, results = "asis"}

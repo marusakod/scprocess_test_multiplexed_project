@@ -1,10 +1,10 @@
 ---
 title: "test_multiplexed_project"
 author:
-- name: Will Macnair
+- name: Testy McUser
   affiliation: 
-  - F. Hoffmann-La Roche Ltd.
-date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+  - Unemployed
+date: '`r format(as.Date("2026-01-01"), "%B %d, %Y")`'
 output:
   rmdformats::downcute:
     highlight: textmate
@@ -33,4 +33,33 @@ Use this page to navigate through the full set of visualizations and outputs for
 
 
 
+
+## Config files
+
+
+<details closed>
+<summary>▸ *config-test_multiplexed_project.yaml* (click to expand)</summary>
+
+```yaml
+project:
+  proj_dir: /pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project
+  fastq_dir: data/fastqs/rna
+  full_tag: test_multiplexed_project
+  short_tag: test
+  your_name: Testy McUser
+  affiliation: Unemployed
+  sample_metadata: data/metadata/multiplexed_test_project_metadata.csv
+  ref_txome: mouse_2024
+  date_stamp: "2026-01-01"
+multiplexing:
+  demux_type: hto
+  fastq_dir: data/fastqs/hto
+  feature_ref: data/metadata/multiplexed_test_project_feature_ref.csv
+qc:
+  qc_max_mito: 0.1
+  qc_min_splice: 0.10
+  qc_max_splice: 0.99
+```
+
+</details>
 

@@ -1,10 +1,10 @@
 ---
 title: "Marker genes"
 author:
-- name: Will Macnair
+- name: Testy McUser
   affiliation: 
-  - F. Hoffmann-La Roche Ltd.
-date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+  - Unemployed
+date: '`r format(as.Date("2026-01-01"), "%B %d, %Y")`'
 output:
   rmdformats::downcute:
     highlight: textmate
@@ -37,17 +37,17 @@ setDTthreads(n_cores)
 ref_txome     = "mouse_2024"
 do_gsea       = as.logical("True")
 metadata_f    = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/data/metadata/multiplexed_test_project_metadata.csv"
-gtf_dt_f      = "/pstore/data/neurogenomics/users/macnairw/scdata_test/reference_transcriptomes/mouse_2024/mouse_2024_genes_gtf.txt.gz"
-pb_f          = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/pb_test_multiplexed_project_0.2_2026-02-19.rds"
-integration_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_integration/integrated_dt_test_multiplexed_project_2026-02-19.csv.gz"
-mkrs_f        = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/pb_marker_genes_test_multiplexed_project_0.2_2026-02-19.csv.gz"
-hvgs_f        = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/pb_hvgs_test_multiplexed_project_0.2_2026-02-19.csv.gz"
-ambient_f     = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_empties/edger_empty_genes_all_test_multiplexed_project_2026-02-19.csv.gz"
+gtf_dt_f      = "/pstore/data/neurogenomics/resources/scdata/reference_genomes/mouse_2024/mouse_2024_genes_gtf.txt.gz"
+pb_f          = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/pb_test_multiplexed_project_0.2_2026-01-01.rds"
+integration_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_integration/integrated_dt_test_multiplexed_project_2026-01-01.csv.gz"
+mkrs_f        = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/pb_marker_genes_test_multiplexed_project_0.2_2026-01-01.csv.gz"
+hvgs_f        = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/pb_hvgs_test_multiplexed_project_0.2_2026-01-01.csv.gz"
+ambient_f     = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_empties/edger_empty_genes_all_test_multiplexed_project_2026-01-01.csv.gz"
 
 # fgsea files
-fgsea_go_bp_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/fgsea_test_multiplexed_project_0.2_go_bp_2026-02-19.csv.gz"
-fgsea_go_cc_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/fgsea_test_multiplexed_project_0.2_go_cc_2026-02-19.csv.gz"
-fgsea_go_mf_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/fgsea_test_multiplexed_project_0.2_go_mf_2026-02-19.csv.gz"
+fgsea_go_bp_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/fgsea_test_multiplexed_project_0.2_go_bp_2026-01-01.csv.gz"
+fgsea_go_cc_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/fgsea_test_multiplexed_project_0.2_go_cc_2026-01-01.csv.gz"
+fgsea_go_mf_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_marker_genes/fgsea_test_multiplexed_project_0.2_go_mf_2026-01-01.csv.gz"
 fgsea_paths_f = ""
 fgsea_hlmk_f  = ""
 

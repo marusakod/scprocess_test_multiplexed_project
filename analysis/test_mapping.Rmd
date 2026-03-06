@@ -1,10 +1,10 @@
 ---
 title: "Read mapping diagnostics"
 author:
-- name: Will Macnair
+- name: Testy McUser
   affiliation:
-  - F. Hoffmann-La Roche Ltd.
-date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+  - Unemployed
+date: '`r format(as.Date("2026-01-01"), "%B %d, %Y")`'
 output:
   rmdformats::downcute:
     highlight: textmate

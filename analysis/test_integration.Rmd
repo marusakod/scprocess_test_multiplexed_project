@@ -1,10 +1,10 @@
 ---
 title: "Integration diagnostics"
 author:
-- name: Will Macnair
+- name: Testy McUser
   affiliation: 
-  - F. Hoffmann-La Roche Ltd.
-date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+  - Unemployed
+date: '`r format(as.Date("2026-01-01"), "%B %d, %Y")`'
 output:
   rmdformats::downcute:
     highlight: textmate
@@ -34,7 +34,7 @@ setDTthreads(n_cores)
 
 ```{r setup_input, include = FALSE}
 # inputs via reprocessing
-qc_f          = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_qc/qc_all_samples_test_multiplexed_project_2026-02-19.csv.gz"
+qc_f          = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_qc/qc_all_samples_test_multiplexed_project_2026-01-01.csv.gz"
 
 # define QC lookups
 qc_names      = c('log_counts', 'log_feats', 'logit_mito', 'logit_spliced')
@@ -42,7 +42,7 @@ qc_lu         = c('no. of UMIs', 'no. of genes', 'mito pct.', 'spliced pct.') %>
   setNames(qc_names)
 
 # define integration inputs
-integration_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_integration/integrated_dt_test_multiplexed_project_2026-02-19.csv.gz"
+integration_f = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_integration/integrated_dt_test_multiplexed_project_2026-01-01.csv.gz"
 int_embedding = "harmony"
 demux_type    = "hto"
 batch_var     = "sample_id"

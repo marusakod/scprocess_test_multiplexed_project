@@ -3,12 +3,11 @@ project:
   fastq_dir: data/fastqs/rna
   full_tag: test_multiplexed_project
   short_tag: test
-  your_name: Will Macnair
-  affiliation: F. Hoffmann-La Roche Ltd.
+  your_name: Testy McUser
+  affiliation: Unemployed
   sample_metadata: data/metadata/multiplexed_test_project_metadata.csv
   ref_txome: mouse_2024
-  date_stamp: "2026-02-19"
-  arv_instance: arkau
+  date_stamp: "2026-01-01"
 multiplexing:
   demux_type: hto
   fastq_dir: data/fastqs/hto

@@ -1,10 +1,10 @@
 ---
 title: "Cell-level QC"
 author:
-- name: Will Macnair
+- name: Testy McUser
   affiliation: 
-  - F. Hoffmann-La Roche Ltd.
-date: '`r format(as.Date("2026-02-19"), "%B %d, %Y")`'
+  - Unemployed
+date: '`r format(as.Date("2026-01-01"), "%B %d, %Y")`'
 output:
   rmdformats::downcute:
     highlight: textmate
@@ -33,8 +33,8 @@ setDTthreads(n_cores)
 ```{r setup_input, include = FALSE}
 # define qc metric files
 meta_f      = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/data/metadata/multiplexed_test_project_metadata.csv"
-qc_f        = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_qc/qc_all_samples_test_multiplexed_project_2026-02-19.csv.gz"
-cuts_f      = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_qc/qc_thresholds_by_sample_id_test_multiplexed_project_2026-02-19.csv"
+qc_f        = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_qc/qc_all_samples_test_multiplexed_project_2026-01-01.csv.gz"
+cuts_f      = "/pmount/projects/site/pred/neurogenomics/users/macnairw/test_multiplexed_project/output/test_qc/qc_thresholds_by_sample_id_test_multiplexed_project_2026-01-01.csv"
 batch_var   = "sample_id"
 
 # set default values
